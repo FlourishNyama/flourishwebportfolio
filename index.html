@@ -167,7 +167,7 @@
             right: 0;
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            animation: gridMove 20s linear infinite;
+            /* animation: gridMove 20s linear infinite; */
         }
 
         @keyframes gridMove {
@@ -194,7 +194,7 @@
             color: white;
             margin-bottom: 1rem;
             opacity: 0;
-            animation: slideInUp 1s ease 0.5s forwards;
+            animation: slideInUp 2s ease 1s forwards;
         }
 
         .hero-content .subtitle {
@@ -309,20 +309,17 @@
         }
 
         .code-window {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 12px;
-    padding: 20px;
-    color: #00ff00;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    position: relative;
-    max-width: 400px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    
-    /* Add this line 👇 */
-    height: 400px; 
-}
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
 
         .code-window::before {
             content: '';
@@ -337,13 +334,11 @@
         }
 
         .typing-text {
-    margin-top: 30px;
-    overflow: hidden;
-    border-right: 2px solid #00ff00;
-    animation: typing 4s steps(40, end) infinite, blink-caret 1s step-end infinite;
-    /* Add this line to prevent layout shift */
-    min-height: 7.5em; 
-}
+            margin-top: 30px;
+            overflow: hidden;
+            border-right: 2px solid #00ff00;
+            animation: typing 8s steps(40, end) infinite, blink-caret 3s step-end infinite;
+        }
 
         @keyframes typing {
             0% { width: 0; }
@@ -861,12 +856,12 @@
             <div class="about-content">
                 <div class="about-text">
                     <div class="profile-picture">
-                        <img src="imgpa.jpg" alt="Flourish Nyama's picture" height="30px">
+                        <img src="imgpa.jpg" alt="Your Name" height="30px">
                         </div>
                     <p>With over 2 years of experience in frontend development, I specialize in creating modern, responsive web applications that provide exceptional user experiences. I'm passionate about writing clean, maintainable code and staying up-to-date with the latest web technologies.</p>
-                    <p>My journey began with trying to create my business website and from then triggered my continuous interest in this field.
-                        As a graduate of Computer Engineering Federal University of Technology Minna, Niger state Nigeria, I've learnt resilience and grit and I've had other related skills that has come in handy while working with various startups and established companies and that has brought their digital visions to life. I believe in the power of good design and seamless functionality working together.
-                    Enough with the long talk <b>I GET THE JOB DONE</b></p>
+                    <p>My journey began with trying to create my business website and from then it triggered my continuous interest in this field.
+                        As a graduate of Computer Engineering Federal University of Technology Minna, Niger state Nigeria, I've had other related skills that has come in handy while working with various startups and established companies and that has brought their digital visions to life. I believe in the power of good design and seamless functionality working together.
+                    Enough with the long talk <b>I GET THE JOB DONE</b> even in areas distinct from what I do I learn and get it done</p>
                 </div>
                 <div class="skills-grid">
                     <div class="skill-card">
@@ -899,21 +894,22 @@
         <h2 class="section-title">Featured Projects</h2>
         <div class="projects-grid">
             <div class="project-card">
+                <a href="https://naijaskill.vercel.app/">
                 <div class="project-image">🛍️</div>
                 <div class="project-content">
-                    <h3>E-Commerce Platform</h3>
-                    <p>A full-featured online shopping platform with cart functionality, payment integration, and admin dashboard.</p>
+                    <h3>Elitejob International</h3>
+                    <p>A market place for skilled artisans launching in Nigeria, unique features such as payment integration, admin dashboard, chat page etc. I worked on both the front and backend and now rebranding it from Naijaskill to Elitejob International</p>
                     <div class="project-tech">
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Supabase</span>
                         <span class="tech-tag">Stripe</span>
                     </div>
                     <div class="project-links">
-                        <a href="#" class="project-link">Live Demo</a>
-                        <a href="#" class="project-link">GitHub</a>
+                        <a href="https://www.elitejobinternational.com/" class="project-link">Live Demo</a>
+                        <a href="https://www.elitejobinternational.com/" class="project-link">GitHub</a>
                     </div>
-                </div>
+                </div></a>
             </div>
             <div class="project-card">
                 <div class="project-image">📱</div>
