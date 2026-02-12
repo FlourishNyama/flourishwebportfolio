@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Dashboard - Flourish Nyama</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 1. Base Layout & Variables */
+        :root {
+            --dash-bg: #f8fafc;
+            --sidebar-bg: #1e1e2f;
+            --card-bg: #ffffff;
+            --primary-blue: #6366f1;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none; /* Globally removes underlines as requested */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dash-bg);
+            color: var(--text-main);
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 2. Sidebar Styles */
+        .dashboard-sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .dash-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--primary-blue);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a0aec0;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: 0.2s ease;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: white;
+        }
+
+        /* 3. Main Content & Header */
+        .dashboard-main {
+            flex: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+        }
+
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .welcome-text { color: var(--text-muted); font-size: 0.95rem; }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            border: 2px solid white;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            z-index: 1;
+        }
+
+        .avatar-small {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-blue);
+            object-fit: cover;
+        }
+
+        /* 4. Stats Grid & Cards */
+        .dash-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .card-body h3 {
+            font-size: 2rem;
+            margin: 0.5rem 0;
+            color: var(--text-main);
+        }
+
+        .trend { font-size: 0.85rem; font-weight: 600; }
+        .trend.positive { color: var(--success); }
+        .trend span { color: var(--text-muted); font-weight: 400; }
+
+        /* 5. Chart Section */
+        .dash-chart-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-container-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            height: 320px;
+            width: 100%;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* 6. Responsive Queries for Mobile & Tablet */
+        @media (max-width: 1024px) {
+            .dashboard-wrapper { flex-direction: column; }
+            .dashboard-sidebar {
+                width: 100%;
+                padding: 1rem 2rem;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .dash-nav { display: flex; gap: 10px; margin-bottom: 0; }
+            .dash-logo { margin-bottom: 0; }
+            .nav-item span { display: none; } 
+        }
+
+        @media (max-width: 640px) {
+            .dashboard-main { padding: 1.5rem; }
+            .dash-stats { grid-template-columns: 1fr; }
+            .nav-item { padding: 0.5rem; }
+            .header-title h2 { font-size: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-wrapper">
+        <aside class="dashboard-sidebar">
+            <div class="dash-logo">SocialPulse</div>
+            <nav class="dash-nav">
+                <a href="#" class="nav-item active"><span class="icon">📊</span> <span>Overview</span></a>
+                <a href="#" class="nav-item"><span class="icon">📱</span> <span>Platforms</span></a>
+                <a href="#" class="nav-item"><span class="icon">📈</span> <span>Analytics</span></a>
+                <a href="#" class="nav-item"><span class="icon">⚙️</span> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <header class="dash-header">
+                <div class="header-title">
+                    <h2>Social Analytics</h2>
+                    <p class="welcome-text">Welcome back, Flourish Nyama</p>
+                </div>
+                <div class="user-profile">
+                    <div class="status-indicator"></div>
+                    <img src="imgpa.jpg" alt="Profile" class="avatar-small">
+                </div>
+            </header>
+
+            <section class="dash-stats">
+                <div class="stat-card">
+                    <div class="card-header">
+                        <span>Twitter</span>
+                        <span>🐦</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>12.4k</h3>
+                        <p class="trend positive">↑ 5.2% <span>this week</span></p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="card-header">
+                        <span>Instagram</span>
+                        <span>📸</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>45.1k</h3>
+                        <p class="trend positive">↑ 12.8% <span>this week</span></p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="card-header">
+                        <span>LinkedIn</span>
+                        <span>💼</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>8.2k</h3>
+                        <p class="trend neutral">→ 0.0% <span>stable</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dash-chart-section">
+                <div class="chart-container-header">
+                    <h3>Engagement Trends</h3>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="engagementChart"></canvas>
+                    <div id="chartLoader" class="loader">Initializing Analytics...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('engagementChart').getContext('2d');
+            const loader = document.getElementById('chartLoader');
+
+            // Gradient fill for the chart
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(99, 102, 241, 0.4)');
+            gradient.addColorStop(1, 'rgba(99, 102, 241, 0)');
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Weekly Engagement',
+                        data: [1200, 2100, 1800, 3200, 2500, 4100, 3800],
+                        borderColor: '#6366f1',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4, 
+                        pointRadius: 5,
+                        pointHoverRadius: 8,
+                        pointBackgroundColor: '#6366f1',
+                        pointBorderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { color: '#6b7280' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#6b7280' }
+                        }
+                    }
+                }
+            });
+
+            if(loader) loader.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
