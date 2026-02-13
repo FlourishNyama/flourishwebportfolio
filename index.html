@@ -981,7 +981,7 @@
                     🐙 GitHub
                 </a>
             </div>
-                <form class="contact-form" style="background-color: #dfe3ec;">
+                <form action="https://formspree.io/f/xbdagqqe" method="POST" class="contact-form" style="background-color: #dfe3ec;">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -1091,28 +1091,31 @@
 
       // Contact Form Submission
       const contactForm = document.querySelector('.contact-form');
-      contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = contactForm.name.value.trim();
-        const email = contactForm.email.value.trim();
-        const message = contactForm.message.value.trim();
-        if(!name || !email || !message){
-          alert('Please fill out all fields.');
-          return;
-        }
-        let successMessage = document.querySelector('.success-message');
-        if(!successMessage){
-          successMessage = document.createElement('div');
-          successMessage.className = 'success-message';
-          successMessage.textContent = 'Thank you for your message! I will get back to you soon.';
-          contactForm.parentNode.appendChild(successMessage);
-        }
-        successMessage.style.display = 'block';
-        contactForm.reset();
-        setTimeout(() => {
-          successMessage.style.display = 'none';
-        }, 5000);
-      });
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault(); // Stop page reload
+  
+  const data = new FormData(contactForm);
+  const response = await fetch(contactForm.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+
+  if (response.ok) {
+    let successMessage = document.querySelector('.success-message');
+    if (!successMessage) {
+      successMessage = document.createElement('div');
+      successMessage.className = 'success-message';
+      successMessage.textContent = 'Thank you! I have received your message.';
+      contactForm.parentNode.appendChild(successMessage);
+    }
+    successMessage.style.display = 'block';
+    contactForm.reset();
+    setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
+  } else {
+    alert('Oops! There was a problem submitting your form');
+  }
+});
     </script>
 </body>
 </html>
